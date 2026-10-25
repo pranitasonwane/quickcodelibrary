@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Quick Code Library</title>
+<style>
+body { font-family: Arial; background:#111827; color:white; text-align:center; }
+input { padding:10px; width:300px; margin:20px; }
+button { padding:8px 15px; margin:5px; cursor:pointer; }
+.card {
+    background:#1f2937;
+    padding:15px;
+    margin:10px auto;
+    width:60%;
+    text-align:left;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Quick Code Library</h1>
+
+<input type="text" id="search" placeholder="Search..." onkeyup="render()">
+
+<div>
+<button onclick="setLang('all')">All</button>
+<button onclick="setLang('c')">C</button>
+<button onclick="setLang('python')">Python</button>
+</div>
+
+<div id="container"></div>
+
+<script>
+
+let currentLang = "all";
+
+// ================= SNIPPETS =================
+
+let snippets = [
+
+/////// ===== C (50) ===== ///////
+
+{lang:"c", title:"C Hello", code:"#include<stdio.h>\nint main(){ printf(\"Hello\"); }"},
+{lang:"c", title:"C Loop", code:"for(int i=0;i<10;i++){ printf(\"%d\",i); }"},
+{lang:"c", title:"C While", code:"int i=0; while(i<5){ i++; }"},
+{lang:"c", title:"C If Else", code:"if(a>b) printf(\"A\"); else printf(\"B\");"},
+{lang:"c", title:"C Array", code:"int a[5]={1,2,3,4,5};"},
+{lang:"c", title:"C Function", code:"int add(int a,int b){ return a+b; }"},
+{lang:"c", title:"C Pointer", code:"int a=10; int *p=&a;"},
+{lang:"c", title:"C String", code:"char s[]=\"Hello\";"},
+{lang:"c", title:"C Struct", code:"struct S{ int id; };"},
+{lang:"c", title:"C File Write", code:"FILE *f=fopen(\"a.txt\",\"w\"); fprintf(f,\"Hi\");"},
+{lang:"c", title:"C File Read", code:"FILE *f=fopen(\"a.txt\",\"r\");"},
+{lang:"c", title:"C Recursion", code:"int f(int n){ return n==0?1:n*f(n-1); }"},
+{lang:"c", title:"C Switch", code:"switch(n){ case 1: break; }"},
+{lang:"c", title:"C 2D Array", code:"int a[2][2]={{1,2},{3,4}};"},
+{lang:"c", title:"C Break", code:"for(int i=0;i<5;i++){ if(i==3) break; }"},
+{lang:"c", title:"C Continue", code:"for(int i=0;i<5;i++){ if(i==3) continue; }"},
+{lang:"c", title:"C Input", code:"scanf(\"%d\",&a);"},
+{lang:"c", title:"C Output", code:"printf(\"%d\",a);"},
+{lang:"c", title:"C Math", code:"pow(2,3);"},
+{lang:"c", title:"C Sorting", code:"// simple sort"},
+{lang:"c", title:"C Searching", code:"// linear search"},
+{lang:"c", title:"C Prime", code:"for(i=2;i<n;i++) if(n%i==0)"},
+{lang:"c", title:"C Fibonacci", code:"a=0,b=1;"},
+{lang:"c", title:"C Palindrome", code:"// check reverse"},
+{lang:"c", title:"C Reverse", code:"// reverse number"},
+{lang:"c", title:"C Sum Digits", code:"// sum digits"},
+{lang:"c", title:"C Even Odd", code:"if(n%2==0)"},
+{lang:"c", title:"C Swap", code:"int t=a; a=b; b=t;"},
+{lang:"c", title:"C Factorial", code:"int f=1;"},
+{lang:"c", title:"C Count Digits", code:"while(n){count++;}"},
+{lang:"c", title:"C Binary Search", code:"// binary search"},
+{lang:"c", title:"C Bubble Sort", code:"// bubble sort"},
+{lang:"c", title:"C Selection Sort", code:"// selection sort"},
+{lang:"c", title:"C Insertion Sort", code:"// insertion sort"},
+{lang:"c", title:"C Stack", code:"// stack"},
+{lang:"c", title:"C Queue", code:"// queue"},
+{lang:"c", title:"C Linked List", code:"// linked list"},
+{lang:"c", title:"C File Append", code:"fopen(\"a.txt\",\"a\");"},
+{lang:"c", title:"C Command Arg", code:"int main(int argc,char *argv[])"},
+{lang:"c", title:"C Bitwise", code:"a & b"},
+{lang:"c", title:"C Exit", code:"exit(0);"},
+{lang:"c", title:"C Typedef", code:"typedef int num;"},
+{lang:"c", title:"C Enum", code:"enum day{Mon,Tue};"},
+{lang:"c", title:"C Do While", code:"do{}while(i<5);"},
+{lang:"c", title:"C Matrix Add", code:"// matrix add"},
+{lang:"c", title:"C Matrix Mul", code:"// matrix mul"},
+{lang:"c", title:"C String Length", code:"strlen(s);"},
+{lang:"c", title:"C String Copy", code:"strcpy(a,b);"},
+{lang:"c", title:"C String Compare", code:"strcmp(a,b);"},
+
+/////// ===== PYTHON (50) ===== ///////
+
+{lang:"python", title:"Py Hello", code:"print('Hello')"},
+{lang:"python", title:"Py Loop", code:"for i in range(10): print(i)"},
+{lang:"python", title:"Py While", code:"while i<5: i+=1"},
+{lang:"python", title:"Py If", code:"if a>b: print('A')"},
+{lang:"python", title:"Py List", code:"a=[1,2,3]"},
+{lang:"python", title:"Py Tuple", code:"t=(1,2)"},
+{lang:"python", title:"Py Set", code:"s={1,2}"},
+{lang:"python", title:"Py Dict", code:"d={'a':1}"},
+{lang:"python", title:"Py Function", code:"def f(): pass"},
+{lang:"python", title:"Py Lambda", code:"f=lambda x:x*2"},
+{lang:"python", title:"Py Recursion", code:"def f(n): return 1 if n==0 else n*f(n-1)"},
+{lang:"python", title:"Py File Write", code:"open('a.txt','w').write('Hi')"},
+{lang:"python", title:"Py File Read", code:"open('a.txt').read()"},
+{lang:"python", title:"Py Input", code:"input()"},
+{lang:"python", title:"Py Output", code:"print(a)"},
+{lang:"python", title:"Py String", code:"s='Hello'"},
+{lang:"python", title:"Py List Loop", code:"for i in a: print(i)"},
+{lang:"python", title:"Py List Comp", code:"[i for i in range(5)]"},
+{lang:"python", title:"Py Sort", code:"a.sort()"},
+{lang:"python", title:"Py Search", code:"if x in a"},
+{lang:"python", title:"Py Class", code:"class A: pass"},
+{lang:"python", title:"Py Object", code:"obj=A()"},
+{lang:"python", title:"Py Try", code:"try: pass\nexcept: pass"},
+{lang:"python", title:"Py Math", code:"import math"},
+{lang:"python", title:"Py Random", code:"import random"},
+{lang:"python", title:"Py Prime", code:"for i in range(2,n):"},
+{lang:"python", title:"Py Fibonacci", code:"a,b=0,1"},
+{lang:"python", title:"Py Palindrome", code:"str(n)==str(n)[::-1]"},
+{lang:"python", title:"Py Reverse", code:"str(n)[::-1]"},
+{lang:"python", title:"Py Sum Digits", code:"sum(map(int,str(n)))"},
+{lang:"python", title:"Py Even Odd", code:"n%2==0"},
+{lang:"python", title:"Py Swap", code:"a,b=b,a"},
+{lang:"python", title:"Py Factorial", code:"import math"},
+{lang:"python", title:"Py Count Digits", code:"len(str(n))"},
+{lang:"python", title:"Py Binary Search", code:"# binary search"},
+{lang:"python", title:"Py Bubble Sort", code:"# bubble sort"},
+{lang:"python", title:"Py Stack", code:"stack=[]"},
+{lang:"python", title:"Py Queue", code:"queue=[]"},
+{lang:"python", title:"Py File Append", code:"open('a.txt','a')"},
+{lang:"python", title:"Py JSON Read", code:"import json"},
+{lang:"python", title:"Py JSON Write", code:"json.dump()"},
+{lang:"python", title:"Py Date Time", code:"import datetime"},
+{lang:"python", title:"Py Sleep", code:"import time"},
+{lang:"python", title:"Py Map", code:"map(lambda x:x*2,a)"},
+{lang:"python", title:"Py Filter", code:"filter(lambda x:x>0,a)"},
+{lang:"python", title:"Py Zip", code:"zip(a,b)"},
+{lang:"python", title:"Py Enumerate", code:"enumerate(a)"},
+{lang:"python", title:"Py Any", code:"any(a)"},
+{lang:"python", title:"Py All", code:"all(a)"},
+{lang:"python", title:"Py Reduce", code:"from functools import reduce"}
+
+];
+
+// ================= RENDER =================
+
+function setLang(lang){
+currentLang = lang;
+render();
+}
+
+function render(){
+let search = document.getElementById("search").value.toLowerCase();
+let container = document.getElementById("container");
+container.innerHTML = "";
+
+snippets.forEach(s=>{
+if(
+(s.title.toLowerCase().includes(search) || s.code.toLowerCase().includes(search)) &&
+(currentLang==="all" || s.lang===currentLang)
+){
+let div = document.createElement("div");
+div.className="card";
+
+div.innerHTML = `
+<b>${s.title}</b><br><br>
+<pre>${s.code}</pre>
+<button onclick="copyText(\`${s.code}\`)">Copy</button>
+`;
+
+container.appendChild(div);
+}
+});
+}
+
+function copyText(text){
+navigator.clipboard.writeText(text);
+alert("Copied!");
+}
+
+render();
+
+</script>
+
+</body>
+</html>
